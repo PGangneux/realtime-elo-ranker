@@ -54,7 +54,7 @@ pnpm run apps:client:dev
 ## Lancer la doc swagger
 
 ```bash
-pnpm run apps:swagger:start
+pnpm run docs:swagger:start
 ```
 
 Le serveur Swagger sera accessible à l'adresse `http://localhost:3001/api-docs`.
@@ -255,3 +255,7 @@ Remarques :
 - La constante `400` est un paramètre empirique qui détermine la sensibilité de la probabilité de victoire à la différence de classement. Plus la constante est grande, plus la probabilité de victoire change rapidement avec la différence de classement.
 - Par sa conception, le système Elo est mathématiquement un système transactionnel, c'est-à-dire que la somme des classements des joueurs reste constante après chaque match. Cela signifie que le classement gagné par un joueur est équivalent au classement perdu par son adversaire.
 
+
+
+
+joueur match classement
