@@ -9,8 +9,11 @@ export class PlayersService {
     private idCounter = 1;
 
     create(c: CreatePlayerDto): Player {
+        if (!c.id) {
+            throw new Error('Player id is required.');
+        }
         const newPlayer: Player = {
-            id: Number(c.id),
+            id: c.id,
         };
 
         this.players.push(newPlayer);

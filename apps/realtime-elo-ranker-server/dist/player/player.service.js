@@ -12,8 +12,11 @@ let PlayersService = class PlayersService {
     players = [];
     idCounter = 1;
     create(c) {
+        if (!c.id) {
+            throw new Error('Player id is required.');
+        }
         const newPlayer = {
-            id: Number(c.id),
+            id: c.id,
         };
         this.players.push(newPlayer);
         return newPlayer;

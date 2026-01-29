@@ -21,11 +21,20 @@ let PlayerController = class PlayerController {
     constructor(playersService) {
         this.playersService = playersService;
     }
+    findAll() {
+        return this.playersService.findAll();
+    }
     create(body) {
         return this.playersService.create(body);
     }
 };
 exports.PlayerController = PlayerController;
+__decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], PlayerController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
@@ -34,7 +43,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PlayerController.prototype, "create", null);
 exports.PlayerController = PlayerController = __decorate([
-    (0, common_1.Controller)('player'),
+    (0, common_1.Controller)('api/player'),
     __metadata("design:paramtypes", [player_service_1.PlayersService])
 ], PlayerController);
 //# sourceMappingURL=player.controller.js.map

@@ -1,3 +1,4 @@
 export interface Player {
-    id: number;
+    id: number | string;
+    rank?: number;
 }
