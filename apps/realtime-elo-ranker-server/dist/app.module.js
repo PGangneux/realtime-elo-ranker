@@ -11,12 +11,14 @@ const common_1 = require("@nestjs/common");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const player_module_1 = require("./player/player.module");
+const ranking_module_1 = require("./ranking/ranking.module");
+const match_module_1 = require("./match/match.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [player_module_1.PlayerModule],
+        imports: [player_module_1.PlayerModule, ranking_module_1.RankingModule, match_module_1.MatchModule],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })
