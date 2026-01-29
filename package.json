@@ -19,5 +19,12 @@
     "motion": "catalog:",
     "next": "catalog:",
     "typescript": "catalog:"
+  },
+  "dependencies": {
+    "@nestjs/typeorm": "^11.0.0",
+    "better-sqlite3": "^12.6.2",
+    "sql.js": "^1.13.0",
+    "sqlite3": "^5.1.7",
+    "typeorm": "^0.3.28"
   }
 }

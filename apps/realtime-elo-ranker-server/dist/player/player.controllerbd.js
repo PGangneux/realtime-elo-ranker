@@ -12,29 +12,38 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PlayerController = void 0;
+exports.PlayerControllerBd = void 0;
 const common_1 = require("@nestjs/common");
 const createplayer_dto_1 = require("./createplayer.dto");
-const player_service_1 = require("./player.service");
-let PlayerController = class PlayerController {
+const player_servicebd_1 = require("./player.servicebd");
+let PlayerControllerBd = class PlayerControllerBd {
     playersService;
     constructor(playersService) {
         this.playersService = playersService;
+    }
+    findAll() {
+        return this.playersService.findAll();
     }
     create(body) {
         return this.playersService.create(body);
     }
 };
-exports.PlayerController = PlayerController;
+exports.PlayerControllerBd = PlayerControllerBd;
+__decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], PlayerControllerBd.prototype, "findAll", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [createplayer_dto_1.CreatePlayerDto]),
     __metadata("design:returntype", void 0)
-], PlayerController.prototype, "create", null);
-exports.PlayerController = PlayerController = __decorate([
+], PlayerControllerBd.prototype, "create", null);
+exports.PlayerControllerBd = PlayerControllerBd = __decorate([
     (0, common_1.Controller)('api/player'),
-    __metadata("design:paramtypes", [player_service_1.PlayersService])
-], PlayerController);
-//# sourceMappingURL=player.controller.js.map
+    __metadata("design:paramtypes", [player_servicebd_1.PlayersServiceBd])
+], PlayerControllerBd);
+//# sourceMappingURL=player.controllerbd.js.map
