@@ -3,15 +3,15 @@ import { Player } from './player.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { EventEmitter2 } from '@nestjs/event-emitter'; 
-import { CreatePlayerDto } from './createplayer.dto';
-import { RankingUpdateEvent } from '../ranking/ranking.update.events';
+import { CreatePlayerDto } from './createplayer.dto';import { RankingService } from '../ranking/ranking.service';import { RankingUpdateEvent } from '../ranking/ranking.update.events';
 
 @Injectable()
 export class PlayersServiceBd {
   constructor(
     @InjectRepository(Player)
     private playersRepository: Repository<Player>,
-    private eventEmitter: EventEmitter2, 
+    private eventEmitter: EventEmitter2,
+    private rankingService: RankingService,
   ) {}
 
   async create(c: CreatePlayerDto): Promise<Player> {
@@ -21,6 +21,7 @@ export class PlayersServiceBd {
 
     const newPlayer = this.playersRepository.create({
       id: c.id,
+      rank: this.rankingService.getInitialRanking(),
     });
 
     const savedPlayer = await this.playersRepository.save(newPlayer);

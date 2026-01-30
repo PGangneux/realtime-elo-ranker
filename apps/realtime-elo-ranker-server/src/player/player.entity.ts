@@ -5,6 +5,6 @@ export class Player {
   @PrimaryColumn()
   id: string; 
 
-  @Column({ default: 0 }) 
+  @Column({ default: 500 }) 
   rank: number;
 }

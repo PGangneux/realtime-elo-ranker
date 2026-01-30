@@ -18,13 +18,16 @@ const player_entity_1 = require("./player.entity");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const event_emitter_1 = require("@nestjs/event-emitter");
+const ranking_service_1 = require("../ranking/ranking.service");
 const ranking_update_events_1 = require("../ranking/ranking.update.events");
 let PlayersServiceBd = class PlayersServiceBd {
     playersRepository;
     eventEmitter;
-    constructor(playersRepository, eventEmitter) {
+    rankingService;
+    constructor(playersRepository, eventEmitter, rankingService) {
         this.playersRepository = playersRepository;
         this.eventEmitter = eventEmitter;
+        this.rankingService = rankingService;
     }
     async create(c) {
         if (!c.id) {
@@ -32,6 +35,7 @@ let PlayersServiceBd = class PlayersServiceBd {
         }
         const newPlayer = this.playersRepository.create({
             id: c.id,
+            rank: this.rankingService.getInitialRanking(),
         });
         const savedPlayer = await this.playersRepository.save(newPlayer);
         this.eventEmitter.emit('ranking.update', new ranking_update_events_1.RankingUpdateEvent(savedPlayer.id, savedPlayer.rank));
@@ -56,6 +60,7 @@ exports.PlayersServiceBd = PlayersServiceBd = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(player_entity_1.Player)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
-        event_emitter_1.EventEmitter2])
+        event_emitter_1.EventEmitter2,
+        ranking_service_1.RankingService])
 ], PlayersServiceBd);
 //# sourceMappingURL=player.servicebd.js.map
