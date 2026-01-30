@@ -5,32 +5,43 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RankingService = void 0;
 const common_1 = require("@nestjs/common");
+const typeorm_1 = require("@nestjs/typeorm");
+const typeorm_2 = require("typeorm");
+const player_entity_1 = require("../player/player.entity");
 let RankingService = class RankingService {
+    playersRepository;
+    constructor(playersRepository) {
+        this.playersRepository = playersRepository;
+    }
     ranking = [];
     subscribers = new Set();
-    getRanking() {
+    async getRanking() {
+        await this.updateRanking();
         return this.ranking.sort((a, b) => b.rank - a.rank);
     }
     getInitialRanking() {
-        console.log(this.ranking);
         if (this.ranking.length === 0) {
             return 500;
         }
         const sum = this.ranking.reduce((acc, player) => acc + player.rank, 0);
         return Math.round(sum / this.ranking.length);
     }
-    updatePlayerRank(id, rank) {
-        const existing = this.ranking.find(item => item.id === id);
-        if (existing) {
-            existing.rank = rank;
-        }
-        else {
-            this.ranking.push({ id, rank });
-        }
+    async updatePlayerRank(id, rank) {
+        await this.playersRepository.update({ id }, { rank });
+        await this.updateRanking();
         this.notifySubscribers({ type: 'RankingUpdate', player: { id, rank } });
+    }
+    async updateRanking() {
+        this.ranking = await this.playersRepository.find();
     }
     subscribe(callback) {
         this.subscribers.add(callback);
@@ -44,6 +55,8 @@ let RankingService = class RankingService {
 };
 exports.RankingService = RankingService;
 exports.RankingService = RankingService = __decorate([
-    (0, common_1.Injectable)()
+    (0, common_1.Injectable)(),
+    __param(0, (0, typeorm_1.InjectRepository)(player_entity_1.Player)),
+    __metadata("design:paramtypes", [typeorm_2.Repository])
 ], RankingService);
 //# sourceMappingURL=ranking.service.js.map

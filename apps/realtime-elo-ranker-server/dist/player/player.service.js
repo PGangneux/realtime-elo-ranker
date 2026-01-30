@@ -37,7 +37,7 @@ let PlayersService = class PlayersService {
     findOne(id) {
         const player = this.players.find(player => player.id === id);
         if (!player) {
-            throw new common_1.NotFoundException(`Cat with id ${id} not found`);
+            throw new common_1.NotFoundException(`Player with id ${id} not found`);
         }
         return player;
     }

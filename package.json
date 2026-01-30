@@ -10,21 +10,30 @@
     "apps:api-mock:start": "pnpm run --filter ./apps/realtime-elo-ranker-api-mock start",
     "libs:ui:build": "pnpm run --filter ./libs/ui build",
     "libs:ui:test": "pnpm run --filter ./libs/ui test",
-    "docs:swagger:start": "pnpm run --filter ./docs/swagger start",
-    "apps:server:dev": "pnpm run --filter ./apps/realtime-elo-ranker-server start:dev"
+    "docs:swagger:start": "pnpm run --filter ./docs/swagger start"
   },
   "devDependencies": {
-    "@nestjs/cli": "^11.0.16",
+    "@nestjs/cli": "^11.0.14",
     "generate-react-cli": "catalog:",
     "motion": "catalog:",
     "next": "catalog:",
     "typescript": "catalog:"
   },
   "dependencies": {
-    "@nestjs/typeorm": "^11.0.0",
-    "better-sqlite3": "^12.6.2",
-    "sql.js": "^1.13.0",
-    "sqlite3": "^5.1.7",
-    "typeorm": "^0.3.28"
+    "sqlite3": "^5.1.7"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "sqlite3",
+      "@nestjs/core",
+      "@scarf/scarf"
+    ],
+    "ignoredBuiltDependencies": [
+      "@nestjs/core",
+      "@scarf/scarf",
+      "sharp",
+      "sqlite3",
+      "unrs-resolver"
+    ]
   }
 }

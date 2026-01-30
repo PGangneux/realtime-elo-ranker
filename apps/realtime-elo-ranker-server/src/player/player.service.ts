@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Player } from './interfaces/player.interfaces';
+import { Player } from './player.entity';
 import { CreatePlayerDto } from './createplayer.dto';
 import { RankingService } from '../ranking/ranking.service';
 
@@ -29,10 +29,10 @@ export class PlayersService {
         return this.players;
     }
 
-    findOne(id: number): Player {
+    findOne(id: string): Player {
         const player = this.players.find(player => player.id === id);
         if (!player){
-            throw new NotFoundException(`Cat with id ${id} not found`);
+            throw new NotFoundException(`Player with id ${id} not found`);
         }
         return player;
     }

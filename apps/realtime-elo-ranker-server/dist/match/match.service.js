@@ -18,11 +18,11 @@ let MatchService = class MatchService {
     constructor(rankingService) {
         this.rankingService = rankingService;
     }
-    processMatch(matchData) {
+    async processMatch(matchData) {
         if (!matchData.winner || !matchData.loser) {
             throw new common_1.BadRequestException('Winner and loser are required');
         }
-        const ranking = this.rankingService.getRanking();
+        const ranking = await this.rankingService.getRanking();
         const winnerRank = ranking.find(p => p.id === matchData.winner)?.rank || 1000;
         const loserRank = ranking.find(p => p.id === matchData.loser)?.rank || 1000;
         let newWinnerRank = winnerRank;
@@ -37,8 +37,8 @@ let MatchService = class MatchService {
             newWinnerRank = Math.round(winnerRank + this.K_FACTOR * (1 - expectedWinner));
             newLoserRank = Math.round(loserRank + this.K_FACTOR * (0 - expectedLoser));
         }
-        this.rankingService.updatePlayerRank(matchData.winner, newWinnerRank);
-        this.rankingService.updatePlayerRank(matchData.loser, newLoserRank);
+        await this.rankingService.updatePlayerRank(matchData.winner, newWinnerRank);
+        await this.rankingService.updatePlayerRank(matchData.loser, newLoserRank);
         return {
             winner: {
                 id: matchData.winner,

@@ -1,16 +1,16 @@
 export interface MatchResult {
   winner: {
-    id: string | number;
+    id: string;
     rank: number;
   };
   loser: {
-    id: string | number;
+    id: string;
     rank: number;
   };
 }
 
 export interface CreateMatchDto {
-  winner: string | number;
-  loser: string | number;
+  winner: string;
+  loser: string;
   draw?: boolean;
 }

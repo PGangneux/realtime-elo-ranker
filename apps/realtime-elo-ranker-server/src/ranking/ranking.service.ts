@@ -1,19 +1,27 @@
 import { Injectable } from '@nestjs/common';
-import { RankingItem } from './interfaces/ranking.interfaces';
+import { OnEvent } from '@nestjs/event-emitter';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Player } from 'src/player/player.entity';
 
 @Injectable()
 export class RankingService {
-  private ranking: RankingItem[] = [];
+  constructor(
+    @InjectRepository(Player)
+    private playersRepository: Repository<Player>,
+  ) {}
+
+  private ranking: Player[] = [];
   private subscribers: Set<(data: any) => void> = new Set();
 
-  getRanking(): RankingItem[] {
+  async getRanking(): Promise<Player[]> {
+    await this.updateRanking();
     return this.ranking.sort((a, b) => b.rank - a.rank);
   }
 
   
   // Retourne le ranking initial pour un nouveau joueur
   getInitialRanking(): number {
-    console.log(this.ranking);
     if (this.ranking.length === 0) {
       return 500; // si aucun joueur, valeur par défaut
     }
@@ -22,14 +30,14 @@ export class RankingService {
     return Math.round(sum / this.ranking.length); // moyenne arrondie
   }
 
-  updatePlayerRank(id: string | number, rank: number): void {
-    const existing = this.ranking.find(item => item.id === id);
-    if (existing) {
-      existing.rank = rank;
-    } else {
-      this.ranking.push({ id, rank });
-    }
+  async updatePlayerRank(id: string, rank: number): Promise<void> {
+    await this.playersRepository.update({ id }, { rank });
+    await this.updateRanking();
     this.notifySubscribers({ type: 'RankingUpdate', player: { id, rank } });
+  }
+
+  private async updateRanking(): Promise<void> {
+    this.ranking = await this.playersRepository.find();
   }
 
   subscribe(callback: (data: any) => void): () => void {

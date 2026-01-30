@@ -12,15 +12,15 @@ const typeorm_1 = require("@nestjs/typeorm");
 const player_controllerbd_1 = require("./player.controllerbd");
 const player_servicebd_1 = require("./player.servicebd");
 const player_entity_1 = require("./player.entity");
-const ranking_module_1 = require("../ranking/ranking.module");
 let PlayerModuleBd = class PlayerModuleBd {
 };
 exports.PlayerModuleBd = PlayerModuleBd;
 exports.PlayerModuleBd = PlayerModuleBd = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([player_entity_1.Player]), ranking_module_1.RankingModule],
+        imports: [typeorm_1.TypeOrmModule.forFeature([player_entity_1.Player])],
         controllers: [player_controllerbd_1.PlayerControllerBd],
         providers: [player_servicebd_1.PlayersServiceBd],
+        exports: [player_servicebd_1.PlayersServiceBd],
     })
 ], PlayerModuleBd);
 //# sourceMappingURL=player.modulebd.js.map

@@ -1,4 +1,4 @@
-import { Player } from './interfaces/player.interfaces';
+import { Player } from './player.entity';
 import { CreatePlayerDto } from './createplayer.dto';
 import { RankingService } from '../ranking/ranking.service';
 export declare class PlayersService {
@@ -8,5 +8,5 @@ export declare class PlayersService {
     constructor(rankingService: RankingService);
     create(c: CreatePlayerDto): Player;
     findAll(): Player[];
-    findOne(id: number): Player;
+    findOne(id: string): Player;
 }

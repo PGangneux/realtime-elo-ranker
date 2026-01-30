@@ -39,7 +39,6 @@ catalog:
 ignoredBuiltDependencies:
   - '@nestjs/core'
   - '@scarf/scarf'
-  - better-sqlite3
   - sqlite3
   - unrs-resolver
 

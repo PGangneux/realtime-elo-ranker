@@ -3,6 +3,6 @@ import { RankingService } from './ranking.service';
 export declare class RankingController {
     private rankingService;
     constructor(rankingService: RankingService);
-    getRanking(): import("./interfaces/ranking.interfaces").RankingItem[];
+    getRanking(): Promise<import("../player/player.entity").Player[]>;
     getEvents(res: Response): void;
 }

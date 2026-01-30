@@ -8,13 +8,13 @@ export class MatchService {
 
   constructor(private rankingService: RankingService) {}
 
-  processMatch(matchData: CreateMatchDto): MatchResult {
+  async processMatch(matchData: CreateMatchDto): Promise<MatchResult> {
     if (!matchData.winner || !matchData.loser) {
       throw new BadRequestException('Winner and loser are required');
     }
 
     // Get current rankings
-    const ranking = this.rankingService.getRanking();
+    const ranking = await this.rankingService.getRanking();
     const winnerRank = ranking.find(p => p.id === matchData.winner)?.rank || 1000;
     const loserRank = ranking.find(p => p.id === matchData.loser)?.rank || 1000;
 
@@ -35,8 +35,8 @@ export class MatchService {
     }
 
     // Update ranking service
-    this.rankingService.updatePlayerRank(matchData.winner, newWinnerRank);
-    this.rankingService.updatePlayerRank(matchData.loser, newLoserRank);
+    await this.rankingService.updatePlayerRank(matchData.winner, newWinnerRank);
+    await this.rankingService.updatePlayerRank(matchData.loser, newLoserRank);
 
     return {
       winner: {

@@ -1,23 +1,28 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PlayerModuleBd } from './player/player.modulebd';
-import { RankingModule } from './ranking/ranking.module';
 import { MatchModule } from './match/match.module';
-import { join } from 'path';
+import { RankingModule } from './ranking/ranking.module';
 
 @Module({
   imports: [
+    EventEmitterModule.forRoot(),
+    
     TypeOrmModule.forRoot({
-      type: 'better-sqlite3',
-      database: join(process.cwd(), 'db.sqlite'), // safer for CommonJS
-      entities: [join(process.cwd(), '**', '*.entity.{ts,js}')],
-      synchronize: true,
+      type: 'sqlite',
+      database: 'database.db', 
+      entities: [__dirname + '/**/*.entity{.ts,.js}'], 
+      synchronize: true, 
     }),
+    
     PlayerModuleBd,
-    RankingModule,
+    
     MatchModule,
+    
+    RankingModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,10 +1,10 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn } from 'typeorm';
 
-@Entity('players')
+@Entity()
 export class Player {
   @PrimaryColumn()
-  id: string;
+  id: string; 
 
-  @Column({ default: 1000 })
+  @Column({ default: 0 }) 
   rank: number;
 }
